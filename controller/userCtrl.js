@@ -3,39 +3,25 @@ const userModel = require('../model/userModel')
 module.exports = {
   showIndexPage (req, res) {
     userModel.getAllUsers((err, results) => {
-      if (err) return res.send('')
-      res.render('index', {
-        list: results
+      if (err) return res.send(404)
+      // res.json({
+      //   list: results
+      // })
+      res.json(results)
+    })
+  },
+  addNewUser (req, res) {
+    let user = req.body
+    // console.log(req);
+    console.log(user);
+    console.log(req.query);
+    userModel.addNewUsers(user, (err, results) => {
+      if (err) return res.json({
+        msg: '添加失败'
+      })
+      res.json({
+        msg: '添加成功'
       })
     })
-    res.send('index')
-  },
-  getList (req, res) {
-    res.send([
-      {
-        name: 'a',
-        age: 10
-      },
-      {
-        name: 'b',
-        age: 20
-      },
-      {
-        name: 'c',
-        age: 30
-      },
-      {
-        name: 'd',
-        age: 40
-      },
-      {
-        name: 'e',
-        age: 50
-      },
-      {
-        name: 'f',
-        age: 60
-      }
-    ])
   }
 }

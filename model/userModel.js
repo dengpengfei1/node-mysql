@@ -1,17 +1,17 @@
 const mysql = require('mysql')
 
 const connection = mysql.createConnection({
-  host: '127.0.0.1',
-  user: 'root',
-  password: 'root',
-  database: 'sqlstudy'
+  host     : 'localhost',
+  user     : 'root',
+  password : 'root',
+  database : 'mysql-study'
 })
-
+connection.connect()
 module.exports = {
   getAllUsers (cb) {
-    return connection.query('select * from users', cb)
+    connection.query('select * from person order by id asc', cb)
   },
-  addNewUsers () {
-
+  addNewUsers (user, cb) {
+    connection.query('insert into person set ?', user, cb)
   }
 }
